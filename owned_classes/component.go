@@ -27,7 +27,7 @@ type Component struct {
     IsHeart bool `json:"is_heart"` //as long as one heart still is OK in a mecha, it survives
 }
 
-func (c *Component) Tick(mech_items *ItemCollection) {
+func (c *Component) Tick(mech_items *ItemCollection) bool {
     if c.IsOn { //don't bother checking if I'm off
         if mech_items.CanContain(c.ReqdItems) {
             c.IsFunctioning = true
@@ -37,10 +37,18 @@ func (c *Component) Tick(mech_items *ItemCollection) {
             c.IsFunctioning = false // T_T
         }
     }
+    if c.IsOn && c.IsFunctioning && c.IsHeart {
+        return true
+    } else {
+        return false
+    }
 }
 
-func (c *Component) Info() string {
-    czech := ""
+func (c Component) Info() string {
+    is_on, is_functioning := "_", "_"
+    if (c.IsOn) {is_on = "O"}
+    if (c.IsFunctioning) {is_functioning = "F"}
+    czech := fmt.Sprintf("%s%s ", is_on, is_functioning)
 
     //Speed
     if c.D_Speed == 0 { //no extra speed
@@ -75,7 +83,7 @@ func (c *Component) Info() string {
 }
 
 //Effective SWA is whatever the S_SWA + D_SWA is.
-func (c *Component) E_Speed() int {
+func (c Component) E_Speed() int {
     output := c.S_Speed
     if c.IsOn && c.IsFunctioning {
         output += c.D_Speed
@@ -83,7 +91,7 @@ func (c *Component) E_Speed() int {
     return output
 }
 
-func (c *Component) E_Weight() int {
+func (c Component) E_Weight() int {
     output := c.S_Weight
     if c.IsOn && c.IsFunctioning {
         output += c.D_Weight
@@ -91,7 +99,7 @@ func (c *Component) E_Weight() int {
     return output
 }
 
-func (c *Component) E_Armor() int {
+func (c Component) E_Armor() int {
     output := c.S_Armor
     if c.IsOn && c.IsFunctioning {
         output += c.D_Armor

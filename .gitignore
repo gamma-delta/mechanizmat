@@ -1,5 +1,7 @@
 # IGNORE THINGS
 
+key.go
+
 #we don't need the .exe right now
 mechanizmat.exe
 

@@ -98,12 +98,56 @@ func comesFromDM(s *discordgo.Session, m *discordgo.MessageCreate) (bool, error)
 }
 
 func send(s *discordgo.Session, m *discordgo.Message, msg string) {
-    s.ChannelMessageSend(m.ChannelID, msg)
+    split_message := split_long(msg)
+    for _, msg := range split_message {
+        s.ChannelMessageSend(m.ChannelID, msg)
+    }
 }
 
 func pm(s *discordgo.Session, m *discordgo.Message, msg string) {
     channel, _ := s.UserChannelCreate(m.Author.ID)
-    s.ChannelMessageSend(channel.ID, msg)
+    split_message := split_long(msg)
+    for _, msg := range split_message {
+        s.ChannelMessageSend(channel.ID, msg)
+    }
+}
+
+func split_long(msg string) []string {
+    //Returns the message chunked into blocks. Almost 100% magic internet code
+    line_size := 10
+    var coarse_split [][]string
+    fine_split := strings.FieldsFunc(msg, func(input rune) bool {
+        return input == '\n'
+    })
+    for line_size < len(fine_split) {
+        fine_split, coarse_split = fine_split[line_size:], 
+            append(coarse_split, fine_split[0:line_size:line_size])
+    }
+    coarse_split = append(coarse_split, fine_split)
+    
+    var conglomerate []string
+    for _, batch := range coarse_split {
+        long_line := ""
+        for _, line := range batch {
+            long_line += line + "\n"
+        }
+        conglomerate = append(conglomerate, long_line)
+    }
+
+    needs_code_tags := false
+    var output []string
+    for _, chunk := range conglomerate {
+        if needs_code_tags {
+            chunk = "```" + chunk
+        }
+        if strings.Count(chunk, "```") % 2 == 1 {
+            //if there's an odd number of ```
+            needs_code_tags = true
+            chunk += "```"
+        }
+        output = append(output, chunk)
+    }
+    return output
 }
 
 //----------------Define player commands----------------------------

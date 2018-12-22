@@ -2,6 +2,7 @@ package main
 
 import (
     // Local packages
+    "mechanizmat/key"
     "mechanizmat/commands"
     "mechanizmat/game_classes"
 
@@ -18,7 +19,7 @@ func main() {
     game_classes.Mechanizmat.Load()
 
     fmt.Println("Creating session...")
-    session, err := discordgo.New("Bot "+ "NTIzNjMzNDYzMjYyNDQ1NTg5.DvcXNw.RzDQhVctHc2RWtTNu58g7-QbLD0")
+    session, err := discordgo.New(key.key)
     if err != nil {
         fmt.Println("!!ERROR creating session: ", err)
         return

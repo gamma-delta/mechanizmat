@@ -58,6 +58,7 @@ func (p *Player) GiveStarterKit() {
             "WATER": 200,
             "FUEL": 20,
         },
+        IsFunctioning: true,
     })
 
     p.Items = owned_classes.ItemCollection{

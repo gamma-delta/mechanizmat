@@ -1,5 +1,5 @@
 package owned_classes
 
 type ticker interface {
-    Tick()
+    Tick() bool
 }

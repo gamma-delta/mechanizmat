@@ -24,25 +24,20 @@ func init() {
                 "FUEL": 2, 
             }, ProdItems: ItemCollection{"STEAM": 10},
             IsHeart: true,
+            IsOn: true, IsFunctioning: true,
         },
 
         "ARMOR_1": Component{Name: "Ottoman Plating", 
             S_Weight: 500, S_Armor: 50,
+            IsOn: true, IsFunctioning: true,
         },
 
         "TREADS_1": Component{Name: "Whitney Tread MK I",
             S_Weight: 150, S_Armor: 20, 
             D_Speed: 100,
             ReqdItems: ItemCollection{"STEAM": 20},
+            IsOn: true, IsFunctioning: true,
         },
-    }
-
-    for _, comp := range AllComponents {
-        comp.IsOn = true
-        comp.IsFunctioning = true
-        if comp.S_Armor == 0 {
-            comp.S_Armor = 10 //default armor class
-        }
     }
 }
 
