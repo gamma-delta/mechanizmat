@@ -1,6 +1,7 @@
 # IGNORE THINGS
 
-key.go
+#I am really dumb
+key/
 
 #we don't need the .exe right now
 mechanizmat.exe
