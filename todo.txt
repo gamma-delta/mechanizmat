@@ -1,0 +1,7 @@
+Get battles working:
+    Ticking
+        Does one ItemCollection fit in the other? [x]
+        add and subtract ItemCollections [x]
+        implement adding and subtracting ItemCollections[x]
+        change status of components [x]
+        Make sure it works with a test
