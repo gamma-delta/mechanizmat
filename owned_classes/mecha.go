@@ -40,7 +40,8 @@ func (m *Mecha) Info(long_info bool) string {
     if m.IsOn {is_on = "O"} else {is_on = "_"}
     var is_functioning string
     if m.IsFunctioning {is_functioning = "F"} else {is_functioning = "_"}
-    czech := fmt.Sprintf("%s: S(%d) W(%d) A(%d) %s%s", m.Name, m.Speed(), m.Weight(), m.Armor())
+    czech := fmt.Sprintf("%s: S(%d) W(%d) A(%d) %s%s", 
+        m.Name, m.Speed(), m.Weight(), m.Armor(), is_on, is_functioning)
     if long_info {
         output := fmt.Sprintf("Info for mecha: %s %s\n", m.Name, czech)
         output += fmt.Sprintf("Components x%d:\n", len(m.Components))
