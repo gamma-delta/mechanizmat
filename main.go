@@ -19,7 +19,7 @@ func main() {
     game_classes.Mechanizmat.Load()
 
     fmt.Println("Creating session...")
-    session, err := discordgo.New(key.key)
+    session, err := discordgo.New(key.Key)
     if err != nil {
         fmt.Println("!!ERROR creating session: ", err)
         return
